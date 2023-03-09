@@ -30,13 +30,13 @@ const createTable = () => {
  *
  * @param {MouseEvent} event
  */
-const tableSelectListener = (event) => {
+const tableSelectListener = async (event) => {
     const element = event.target.closest('.select-user')
 
     if (!element) return
 
     const id = element.getAttribute('data-id')
-    showModal(id)
+    await showModal(id)
 }
 
 /**
@@ -78,18 +78,18 @@ export const renderTable = (element) => {
 
     let tableHTML = ''
 
-    users.forEach(user => {
+    users.forEach(({id, balance, firstName, lastName, isActive}) => {
         tableHTML += `
             <tr>
-                <td>${user.id}</td>
-                <td>${user.balance}</td>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
-                <td>${user.isActive}</td>
+                <td>${id}</td>
+                <td>${balance}</td>
+                <td>${firstName}</td>
+                <td>${lastName}</td>
+                <td>${isActive}</td>
                 <td>
-                    <a href="#/" class="select-user" data-id="${user.id}">Select</a>
+                    <button class="select-user btn btn-blue" data-id="${id}">Select</button>
                     |
-                    <a href="#/" class="delete-user" data-id="${user.id}">Delete</a>
+                    <button class="delete-user btn btn-red" data-id="${id}">Delete</button>
                 </td>
             </tr>
         `
