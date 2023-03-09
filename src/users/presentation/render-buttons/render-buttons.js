@@ -15,19 +15,19 @@ export const renderButtons = (element) => {
 
     const currentPageLabel = document.createElement('span')
     currentPageLabel.id = 'current-page'
-    currentPageLabel.innerText = usersStore.getCurrentPage()
+    currentPageLabel.innerText = usersStore.getCurrentPage().toString()
 
     element.append(previousButton, currentPageLabel, nextButton)
 
     nextButton.addEventListener('click', async () => {
         await usersStore.loadNextPage()
-        currentPageLabel.innerText = usersStore.getCurrentPage()
+        currentPageLabel.innerText = usersStore.getCurrentPage().toString()
         renderTable(element)
     })
 
     previousButton.addEventListener('click', async () => {
         await usersStore.loadPreviousPage()
-        currentPageLabel.innerText = usersStore.getCurrentPage()
+        currentPageLabel.innerText = usersStore.getCurrentPage().toString()
         renderTable(element)
     })
 }
