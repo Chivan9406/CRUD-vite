@@ -1,33 +1,29 @@
-import usersStore from "../../store/users-store";
 import './render-buttons.css'
-import {renderTable} from "../render-table/render-table.js";
+import usersStore from '../../store/users-store.js'
+import { renderTable } from '../render-table/render-table.js'
 
-/**
- *
- * @param {HTMLDivElement} element
- */
 export const renderButtons = (element) => {
-    const nextButton = document.createElement('button')
-    nextButton.innerText = 'Next >'
+  const nextButton = document.createElement("button")
+  nextButton.innerText = 'Next >'
 
-    const previousButton = document.createElement('button')
-    previousButton.innerText = '< Prev'
+  const prevButton = document.createElement("button")
+  prevButton.innerText = '< Prev'
 
-    const currentPageLabel = document.createElement('span')
-    currentPageLabel.id = 'current-page'
-    currentPageLabel.innerText = usersStore.getCurrentPage().toString()
+  const currentPageLabel = document.createElement('span')
+  currentPageLabel.id = 'current-page'
+  currentPageLabel.innerText = usersStore.getCurrentPage()
 
-    element.append(previousButton, currentPageLabel, nextButton)
+  element.append(prevButton, currentPageLabel, nextButton)
 
-    nextButton.addEventListener('click', async () => {
-        await usersStore.loadNextPage()
-        currentPageLabel.innerText = usersStore.getCurrentPage().toString()
-        renderTable(element)
-    })
+  nextButton.addEventListener('click', async (event) => {
+    await usersStore.loadNextPage()
+    currentPageLabel.innerText = usersStore.getCurrentPage()
+    renderTable(element)
+  })
 
-    previousButton.addEventListener('click', async () => {
-        await usersStore.loadPreviousPage()
-        currentPageLabel.innerText = usersStore.getCurrentPage().toString()
-        renderTable(element)
-    })
+  prevButton.addEventListener('click', async (event) => {
+    await usersStore.loadPreviousPage()
+    currentPageLabel.innerText = usersStore.getCurrentPage()
+    renderTable(element)
+  })
 }
