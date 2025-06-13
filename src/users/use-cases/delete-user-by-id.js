@@ -3,8 +3,6 @@ export const deleteUserById = async (id) => {
   const res = await fetch(url, {
     method: 'DELETE'
   })
-
-  const deleteResult = await res.json()
-  console.log({deleteResult})
+  await res.json()
   return true
 }

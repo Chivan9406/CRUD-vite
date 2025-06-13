@@ -9,9 +9,7 @@ let loadedUser = {}
 export const showModal = async (id) => {
   modal?.classList.remove('hide-modal')
   loadedUser = {}
-
   if (!id) return
-
   const user = await getUserById(id)
   setFormValues(user)
 }
@@ -36,11 +34,18 @@ export const renderModal = (element, callback) => {
   modal.innerHTML = modalHTML
   modal.classList.add('modal-container', 'hide-modal')
   form = modal.querySelector('form')
+  let clickedOverlay = false
 
-  modal.addEventListener('click', event => {
-    if (event.target.className === 'modal-container') {
+  modal.addEventListener('mousedown', (event) => {
+    clickedOverlay = (event.target === event.currentTarget)
+  })
+
+  modal.addEventListener('click', (event) => {
+    if (clickedOverlay && event.target === event.currentTarget) {
       hideModal()
     }
+
+    clickedOverlay = false
   })
 
   form.addEventListener('submit', async (event) => {
@@ -51,16 +56,16 @@ export const renderModal = (element, callback) => {
 
     for (const [key, value] of formData) {
       if (key === 'balance') {
-        userLike[key] = +value
-        continue
+        userLike.balance = +value
+      } else if (key === 'isActive') {
+        userLike.isActive = form.elements['isActive'].checked
+      } else {
+        userLike[key] = value
       }
+    }
 
-      if (key === 'isActive') {
-        userLike[key] = value === 'on'
-        continue
-      }
-
-      userLike[key] = value
+    if (!formData.has('isActive')) {
+      userLike.isActive = false
     }
 
     await callback(userLike)
