@@ -1,5 +1,5 @@
 import './render-add-button.css'
-import { showModal } from '../render-modal/render-modal.js'
+import { showModal } from '../render-modal/render-modal'
 
 export const renderAddButton = (element) => {
   const fabButton = document.createElement("button")
@@ -7,7 +7,7 @@ export const renderAddButton = (element) => {
   fabButton.classList.add("fab-button")
   element.append(fabButton)
 
-  fabButton.addEventListener("click", () => {
-    showModal()
+  fabButton.addEventListener("click", async () => {
+    await showModal()
   })
 }

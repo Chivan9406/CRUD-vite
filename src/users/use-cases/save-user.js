@@ -1,6 +1,6 @@
 import { User } from '../models/user'
-import { userModelToLocalhost } from '../mappers/user-localhost.mapper.js'
-import { localhostUserToModel } from '../mappers/localhost-user.mapper.js'
+import { userModelToLocalhost } from '../mappers/user-localhost.mapper'
+import { localhostUserToModel } from '../mappers/localhost-user.mapper'
 
 export const saveUser = async (userLike) => {
   const user = new User(userLike)
@@ -31,9 +31,7 @@ const createUser = async (user) => {
     }
   })
 
-  const newUser = await res.json()
-  console.log({newUser})
-  return newUser
+  return await res.json()
 }
 
 const updateUser = async (user) => {
@@ -46,7 +44,5 @@ const updateUser = async (user) => {
     }
   })
 
-  const updatedUser = await res.json()
-  console.log({updatedUser})
-  return updatedUser
+  return await res.json()
 }
